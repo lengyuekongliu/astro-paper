@@ -1,0 +1,37 @@
+---
+import Image from "./Images/Image.astro";
+---
+
+<div id="banner" class="transition-all duration-500">
+    <Image src="/assets/images/cover.webp" />
+</div>
+
+<script>
+    const setup = () => {
+        window.swup.hooks.on("animation:out:start", () => {
+            const path = window.location.pathname;
+            const body = document.body;
+            if (path[path.length - 1] === "/" && !body.classList.contains("is-home")) {
+                body.classList.add("is-home");
+            } else if (path[path.length - 1] !== "/" && body.classList.contains("is-home")) {
+                body.classList.remove("is-home");
+            }
+        });
+    };
+
+    if (window.swup) {
+        setup();
+    } else {
+        document.addEventListener("swup:enable", setup);
+    }
+</script>
+
+<style is:global>
+    .is-home #banner {
+        height: var(--banner-height-home);
+    }
+
+    #banner {
+        height: var(--banner-height);
+    }
+</style>

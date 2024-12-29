@@ -1,0 +1,14 @@
+html.is-changing .transition-swup-fade {
+    @apply transition-all duration-200;
+}
+html.is-animating .transition-swup-fade {
+    @apply opacity-0 translate-y-4;
+}
+
+html,
+body {
+    @apply font-sans;
+    --page-witdh: 75rem;
+    --banner-height-home: 65vh;
+    --banner-height: 35vh;
+}

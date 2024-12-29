@@ -1,22 +1,94 @@
+---
+import "@/styles/main.css";
+import Navbar from "@components/Navbar.vue";
+import Banner from "@components/Banner.astro";
+import { config } from "@/config";
+
+interface Props {
+    title?: string;
+    description?: string;
+    lang?: string;
+}
+
+let { title, description, lang } = Astro.props;
+let pageTitle: string;
+
+const isHome = Astro.url.pathname === "/";
+
+if (!lang) {
+    lang = config.lang;
+}
+
+if (title) {
+    pageTitle = `${title} - ${config.title}`;
+} else {
+    pageTitle = `${config.title} - ${config.subtitle}`;
+}
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang={lang} data-overlayscrollbars-initialize>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content={description || pageTitle} />
+        <meta name="author" content={config.author} />
+
+        <meta property="og:site_name" content={config.title} />
+        <meta property="og:url" content={Astro.url} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={description || pageTitle} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={Astro.url} />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={description || pageTitle} />
+
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{pageTitle}</title>
+    </head>
+    <body class:list={isHome ? "is-home" : ""}>
+        <Navbar client:load />
+        <Banner />
+        <main>
+            <slot />
+        </main>
+    </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+<script>
+    import "overlayscrollbars/overlayscrollbars.css";
+    import { OverlayScrollbars } from "overlayscrollbars";
+    import Lenis from "lenis";
+
+    function initCustomScrollbar() {
+        const osInstance = OverlayScrollbars(
+            {
+                target: document.querySelector("body") as HTMLElement,
+                cancel: {
+                    nativeScrollbarsOverlaid: true,
+                },
+            },
+            {
+                scrollbars: {
+                    theme: localStorage.theme === "dark" ? "os-theme-light" : "os-theme-dark",
+                    autoHide: "move",
+                    autoHideDelay: 500,
+                    autoHideSuspend: false,
+                },
+            }
+        );
+    }
+
+    function initLenis() {
+        new Lenis({ autoRaf: true });
+    }
+
+    function init() {
+        initCustomScrollbar();
+        initLenis();
+    }
+
+    init();
+</script>
