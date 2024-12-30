@@ -13,13 +13,13 @@
                 <a href="/">分类</a>
                 <a href="/about">关于</a>
             </div>
-            <div class="ml-auto flex gap-4">
-                <button class="flex items-center">
-                    <span class="iconify tabler--search text-xl md:transition-transform md:hover:scale-125"></span>
+            <div class="ml-auto flex">
+                <button class="flex items-center justify-center w-8 h-8">
+                    <span class="iconify tabler--search text-xl"></span>
                 </button>
-                <button @click="toggleDarkMode" class="flex items-center">
-                    <span class="iconify tabler--sun-filled text-xl dark:inline hidden md:transition-transform md:hover:scale-125"></span>
-                    <span class="iconify tabler--moon-filled text-xl dark:hidden inline md:transition-transform md:hover:scale-125"></span>
+                <button @click="toggleDarkMode" class="flex items-center justify-center w-8 h-8">
+                    <span class="iconify tabler--sun-filled text-xl dark:inline hidden"></span>
+                    <span class="iconify tabler--moon-filled text-xl dark:hidden inline"></span>
                 </button>
             </div>
         </div>
@@ -28,6 +28,7 @@
 
 <script lang="ts" setup>
 import { config } from "@/config";
+import loadsh from "lodash";
 import { onMounted, onUnmounted, ref } from "vue";
 
 const isShow = ref(true);
@@ -38,13 +39,13 @@ const toggleDarkMode = () => {
 };
 
 let lastScrollTop = 0;
-const onScroll = () => {
+const onScroll = loadsh.throttle(() => {
     const scrollTop = document.documentElement.scrollTop;
     isShow.value = lastScrollTop == 0 || scrollTop < lastScrollTop || scrollTop <= 100;
     lastScrollTop = scrollTop;
-};
+});
 
-onMounted(() => {
+onMounted(async () => {
     onScroll();
     window.addEventListener("scroll", onScroll, {
         capture: false,
