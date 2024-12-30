@@ -7,7 +7,7 @@ html.is-animating .transition-swup-fade {
 
 html,
 body {
-  @apply font-sans;
+  font-family: 'CustomFonts', MiSans, Microsoft YaHei, sans-serif;
   --page-witdh: 75rem;
   --banner-height-home: 65vh;
   --banner-height: 35vh;

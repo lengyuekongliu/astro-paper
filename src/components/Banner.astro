@@ -2,7 +2,7 @@
 import Image from "./Images/Image.astro";
 ---
 
-<div id="banner" class="transition-all duration-500">
+<div id="banner" class="relative transition-all duration-500">
     <Image src="/assets/images/cover.webp" />
 </div>
 
@@ -28,10 +28,19 @@ import Image from "./Images/Image.astro";
 
 <style is:global>
     .is-home #banner {
-        height: var(--banner-height-home);
+        height: var(--banner-height-home)
     }
 
     #banner {
         height: var(--banner-height);
+    }
+
+    #banner::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAKUlEQVQImU3IMREAIAgAwJfNkQCEsH8cijjpMf6vnXlQaIiJFx+omEBfmqIEZLe2jzcAAAAASUVORK5CYII=");
     }
 </style>
