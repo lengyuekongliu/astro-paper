@@ -1,14 +1,30 @@
 html.is-changing .transition-swup-fade {
-    @apply transition-all duration-200;
+  @apply transition-all duration-200;
 }
 html.is-animating .transition-swup-fade {
-    @apply opacity-0 translate-y-4;
+  @apply opacity-0 translate-y-4;
 }
 
 html,
 body {
-    @apply font-sans;
-    --page-witdh: 75rem;
-    --banner-height-home: 65vh;
-    --banner-height: 35vh;
+  @apply font-sans;
+  --page-witdh: 75rem;
+  --banner-height-home: 65vh;
+  --banner-height: 35vh;
+}
+
+body {
+  @apply bg-[#F5F5FA] dark:bg-[#111827] text-[#111827] dark:text-[#CFD2D8] transition-[background-color,color] duration-200;
+}
+
+.os-theme-custom.os-scrollbar {
+  --os-handle-bg: rgba(0, 0, 0, 0.4);
+  --os-handle-bg-hover: rgba(0, 0, 0, 0.5);
+  --os-handle-bg-active: rgba(255, 255, 255, 0.6);
+}
+
+.dark .os-theme-custom.os-scrollbar {
+  --os-handle-bg: rgba(255, 255, 255, 0.4);
+  --os-handle-bg-hover: rgba(255, 255, 255, 0.5);
+  --os-handle-bg-active: rgba(255, 255, 255, 0.6);
 }
