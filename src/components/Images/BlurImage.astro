@@ -1,0 +1,34 @@
+---
+import { imageToBlurHash } from "@utils/image-utils";
+import BlurHash from "./BlurHash.vue";
+import { getImage, Image } from "astro:assets";
+
+interface Props {
+    src: ImageMetadata;
+    alt?: string;
+    class?: string;
+    mask?: boolean;
+    onlyBlur?: boolean;
+}
+
+const { class: className, src, alt = "", mask = false, onlyBlur = false } = Astro.props;
+
+const image = await getImage({ src });
+const blurhash = await imageToBlurHash(src);
+---
+
+<div class="relative h-full overflow-hidden" class:list={[{ mask }, className]}>
+    {!onlyBlur && <Image src={src} alt={alt} class="w-full h-full object-cover object-center" />}
+    {blurhash && <BlurHash client:load src={image.src} blurhash={blurhash} alt={alt} onlyBlur={onlyBlur} class="absolute top-0 w-full h-full object-cover object-center" />}
+</div>
+
+<style>
+    .mask::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAKUlEQVQImU3IMREAIAgAwJfNkQCEsH8cijjpMf6vnXlQaIiJFx+omEBfmqIEZLe2jzcAAAAASUVORK5CYII=");
+    }
+</style>

@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <img v-if="showElement" :src="dataUrl" :alt="alt" :class="class" />
+        <img v-if="showElement" :src="blurhash" :alt="alt" :class="class" />
     </transition>
 </template>
 
@@ -9,29 +9,37 @@ import { onMounted, ref } from "vue";
 
 const props = defineProps<{
     src: string;
-    dataUrl: string;
+    blurhash: string;
     alt?: string;
     class: string;
+    onlyBlur: boolean;
 }>();
 
 const showElement = ref(true);
 
 onMounted(() => {
-    const img = new Image();
-    img.src = props.src;
-    img.onload = () => {
-        showElement.value = false;
-    };
+    if (!props.onlyBlur) {
+        const img = new Image();
+        img.src = props.src;
+        img.onload = () => {
+            showElement.value = false;
+        };
+    }
 });
 </script>
 
 <style>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s;
 }
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave {
+    opacity: 1;
 }
 </style>

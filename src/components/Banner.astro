@@ -1,46 +1,18 @@
 ---
-import Image from "./Images/Image.astro";
+import BlurImage from "./Images/BlurImage.astro";
+import cover from "@/assets/images/cover.webp";
 ---
 
 <div id="banner" class="relative transition-all duration-500">
-    <Image src="/assets/images/cover.webp" />
+    <BlurImage src={cover} mask only-blur />
 </div>
-
-<script>
-    const setup = () => {
-        window.swup.hooks.on("animation:out:start", () => {
-            const path = window.location.pathname;
-            const body = document.body;
-            if (path[path.length - 1] === "/" && !body.classList.contains("is-home")) {
-                body.classList.add("is-home");
-            } else if (path[path.length - 1] !== "/" && body.classList.contains("is-home")) {
-                body.classList.remove("is-home");
-            }
-        });
-    };
-
-    if (window.swup) {
-        setup();
-    } else {
-        document.addEventListener("swup:enable", setup);
-    }
-</script>
 
 <style is:global>
     .is-home #banner {
-        height: var(--banner-height-home)
+        height: var(--banner-height-home);
     }
 
     #banner {
-        height: var(--banner-height);
-    }
-
-    #banner::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAKUlEQVQImU3IMREAIAgAwJfNkQCEsH8cijjpMf6vnXlQaIiJFx+omEBfmqIEZLe2jzcAAAAASUVORK5CYII=");
+        height: var(--banner-height-home);
     }
 </style>

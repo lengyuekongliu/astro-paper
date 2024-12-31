@@ -6,3 +6,7 @@ declare global {
         swup: AstroIntegration;
     }
 }
+
+declare module "astro:assets" {
+    export const assetsDir: URL;
+}
