@@ -1,0 +1,36 @@
+---
+import { getImage, Picture } from "astro:assets";
+import sharp from "sharp";
+import fs from "fs";
+import { rgbaToThumbHash, thumbHashToDataURL } from "thumbhash";
+
+interface Props {
+  title: string;
+  image: ImageMetadata;
+}
+
+const { title, image } = Astro.props;
+// const filePath = (new RegExp(`^${FS_PREFIX}([^?#]*)`).exec(resolvedSrc.src)?.[1] ?? "")
+// blurhash = await imageToHashBase64(filePath);
+// fs.readFileSync(image.src);
+// console.log(image)
+// const bg = sharp(image.src).resize(100, 100, { fit: "inside" });
+// const { data, info } = await bg.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+// const binaryThumbHash = rgbaToThumbHash(info.width, info.height, data);
+// const placeholderURL = thumbHashToDataURL(binaryThumbHash);
+// console.log(await bg.ensureAlpha().raw().toBuffer())
+---
+
+<div
+  class="bg-white dark:bg-black rounded-md p-4 shadow-md shadow-gray-900/5 h-56"
+>
+  <Picture
+    src={image}
+    alt=""
+    class=""
+    formats={["avif", "webp"]}
+    loading="eager"
+    fetchpriority="high"
+  />
+  {title}
+</div>

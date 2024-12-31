@@ -1,0 +1,23 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../layouts/Layout.astro";
+import PostCard from "@components/PostCard.astro";
+import { getPosts } from "@utils/content-utils";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allPosts = await getPosts();
+  return paginate(allPosts, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout>
+  <div class="mx-auto max-w-4xl flex flex-col gap-y-4 px-4">
+    {
+      page.data.map((entry) => {
+        return <PostCard title={entry.data.title} image={entry.data.image} />;
+      })
+    }
+  </div>
+</Layout>

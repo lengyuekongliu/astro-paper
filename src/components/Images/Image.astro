@@ -12,7 +12,6 @@ interface Props {
 }
 
 const { class: className, src, alt } = Astro.props;
-
 const image = sharp(path.resolve(`./src/${src}`)).resize(100, 100, { fit: "inside" });
 const { data, info } = await image.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
 const binaryThumbHash = rgbaToThumbHash(info.width, info.height, data);
